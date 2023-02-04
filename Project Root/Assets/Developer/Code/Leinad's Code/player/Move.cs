@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private PlayerActions _playerInput;
+    private Rigidbody _rb;
+    private float speed = 10f;
+
+    public PlayerActions PlayerInput { get => _playerInput; set => _playerInput = value; }
+    public Rigidbody Rb { get => _rb; set => _rb = value;}
+    public float Speed { get => speed;set => speed = value; }
+
+    public void SetComponents() 
     {
-        
+        _playerInput = new PlayerActions();
+        _rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void MovePlayer()
     {
-        
+        Vector3 moveInput = _playerInput.Movement.Move.ReadValue<Vector3>();
+        _rb.velocity = moveInput * speed;
     }
 }
