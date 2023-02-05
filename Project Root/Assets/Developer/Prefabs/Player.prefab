@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 5201858127806766415}
   m_Layer: 0
   m_Name: FlashLight
-  m_TagString: FlashLight
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e018f43e7151de4a915c0251978e921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
   anim: {fileID: 5201858129121374889}
 --- !u!114 &5201858128763273346
 MonoBehaviour:
@@ -362,8 +363,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 121a7e5d7f238fa499a3e9921d73d92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flashLightCollider: {fileID: 3288751588640521556}
   _textMeshPro: {fileID: 0}
-  PlayerCollider: {fileID: 0}
+  PlayerCollider: {fileID: 5201858128763273406}
 --- !u!135 &5201858128763273406
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -726,7 +728,7 @@ GameObject:
   - component: {fileID: 5201858129390655996}
   m_Layer: 0
   m_Name: flashlightDummy
-  m_TagString: FlashLight
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

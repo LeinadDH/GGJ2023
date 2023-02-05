@@ -8,6 +8,8 @@ using CryoStorage;
 public class Enemy : MonoBehaviour, iFlashLightSensitive
 {
     [Header("Debugging Variables")] 
+    [SerializeField] private bool visualize;
+    
     [Header("Serialized References")]
     [SerializeField] protected GameObject player;
     [SerializeField] protected List<GameObject> wayPoints;
@@ -106,6 +108,7 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
 
     protected void OnDrawGizmos()
     {
+        if (!visualize) return;
         Vector3 pos = transform.position;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(pos, aggroRange);

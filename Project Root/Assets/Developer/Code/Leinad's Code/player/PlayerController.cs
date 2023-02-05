@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
         flashLight = this.gameObject.GetComponent<FlashLight>();
         flashLight.GetLights();
         move.SetComponents();
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+        
     }
 
     private void OnEnable()
