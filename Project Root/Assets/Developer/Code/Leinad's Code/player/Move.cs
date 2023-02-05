@@ -26,5 +26,6 @@ public class Move : MonoBehaviour
 
         anim.SetFloat("Horizontal", moveInput.x);
         anim.SetFloat("Vertical", moveInput.z);
+        anim.SetFloat("Speed", moveInput.sqrMagnitude);
     }
 }
