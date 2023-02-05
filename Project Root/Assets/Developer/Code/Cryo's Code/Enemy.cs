@@ -1,45 +1,42 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour, iFlashLightSensitive
 {
     [Header("Debugging Variables")] 
-    [SerializeField]private bool debugging;
     [Header("Serialized References")]
-    [SerializeField] private GameObject player;
-    [SerializeField] private List<GameObject> wayPoints;
+    [SerializeField] protected GameObject player;
+    [SerializeField] protected List<GameObject> wayPoints;
     
     [Header("Configurable Variables")]
-    [SerializeField] private float aggroRange;
-    [SerializeField] private float deAggroRange;
+    [SerializeField] protected float aggroRange = 5f;
+    [SerializeField] protected float deAggroRange = 10f;
     [Tooltip("Rate at which the enemy is slowed ")]
-    [SerializeField] private float stunRate;
+    [SerializeField] protected float stunRate = 10f;
     [Tooltip("Rate at which the enemy recovers from slow ")]
-    [SerializeField] private float stunRecoveryRate;
-    [SerializeField] private float patrolSpeed;
-    [SerializeField] private float pursuitSpeed;
+    [SerializeField] protected float stunRecoveryRate = 10f;
+
+    [SerializeField] protected float patrolSpeed = 3.5f;
+    [SerializeField] protected float pursuitSpeed = 10f;
     
-    private NavMeshAgent _agent;
-    private int _currentWayPoint;
-    private bool _pursue;
-    private bool _inLight;
+    protected NavMeshAgent _agent;
+    protected int _currentWayPoint;
+    protected bool _pursue;
+    protected bool _inLight;
     void Awake()
     {
         Prepare();
     }
     
-    void Update()
+    protected virtual void Update()
     {
         EnemyStates();
         CheckPlayerDistance();
-        Logging();
     }
     
-    private void EnemyStates()
+    protected void EnemyStates()
     {
         switch (_pursue)
         {
@@ -52,13 +49,13 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
         }
     }
     
-    private void FollowWayPoints()
+    protected void FollowWayPoints()
     {
         _agent.SetDestination(wayPoints[_currentWayPoint].transform.position);
         CycleWayPoints();
     }
 
-    private void CycleWayPoints()
+    protected void CycleWayPoints()
     {
         if (transform.position.x == wayPoints[_currentWayPoint].transform.position.x 
             && transform.position.z == wayPoints[_currentWayPoint].transform.position.z)
@@ -72,7 +69,7 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
         }
     }
     
-    private void CheckPlayerDistance()
+    protected void CheckPlayerDistance()
     {
         float playerDistance = Vector3.Distance(transform.position, player.transform.position);
         
@@ -92,7 +89,7 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
         }
     }
 
-    private void CheckLineOfSight()
+    protected void CheckLineOfSight()
     {
         Vector3 dirToPlayer = player.transform.position - transform.position;
         if(!Physics.Raycast(transform.position, dirToPlayer.normalized,out RaycastHit hit, deAggroRange))return;
@@ -104,7 +101,7 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
     
     #region Debugging And Visualizing
 
-    private void OnDrawGizmos()
+    protected void OnDrawGizmos()
     {
         Vector3 pos = transform.position;
         Gizmos.color = Color.red;
@@ -113,21 +110,15 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
         Gizmos.DrawWireSphere(pos, deAggroRange);
     }
 
-    void Logging()
-    {
-        // Debug.Log(_inLight);
-        
-    }
-
     #endregion
 
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         if(!other.CompareTag("FlashLight"))return;
         OnFlashLightHit();
     }
     
-    private void OnTriggerExit(Collider other)
+    protected void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("FlashLight")) return; 
         OnFlashLightExit();
@@ -135,7 +126,6 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
 
     public void OnFlashLightHit()
     {
-        Debug.Log("FlashLightHit");
         _inLight = true;
         if (!_inLight) return;
         if (_agent.speed <= 0)
@@ -148,26 +138,26 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
 
     public void OnFlashLightExit()
     {
-        Debug.Log("FlashLighExit");
         _inLight = false;
         switch (_pursue)
         {
             case true:
-                if (_agent.speed < pursuitSpeed)
+                if (_agent.speed > pursuitSpeed)
                 {
                     _agent.speed = pursuitSpeed;
                 }
                 break;
             case false:
-                if (_agent.speed < patrolSpeed)
+                if (_agent.speed > patrolSpeed)
                 {
                     _agent.speed = patrolSpeed;
                 }   
                 break;
         }
+                _agent.speed += stunRecoveryRate * Time.fixedDeltaTime;
     }
 
-    private void Prepare()
+    protected void Prepare()
     {
         Application.targetFrameRate = 60;
         try
@@ -176,6 +166,5 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
         }
         catch { Debug.LogWarning("Could not find NavMeshAgent"); }
 
-        debugging = false;
     }
 }
