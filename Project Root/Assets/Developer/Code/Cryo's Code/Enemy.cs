@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+using CryoStorage;
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour, iFlashLightSensitive
 {
