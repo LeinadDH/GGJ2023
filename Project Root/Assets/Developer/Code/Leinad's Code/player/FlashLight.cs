@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Timers;
 using UnityEngine.Rendering.Universal;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class FlashLight : MonoBehaviour
 {
@@ -62,10 +60,16 @@ public class FlashLight : MonoBehaviour
                 _radius = _radius - radiuspercent;
                 _currentTime = 0.0f;
             } 
+
+            if(_batery <= 50)
+            {
+                //enemigos más agresivos
+            }
         }
         else
         {
             _textMeshPro.text = "0%";
+            //Se termino la bateria
         }
     }
 
@@ -85,6 +89,14 @@ public class FlashLight : MonoBehaviour
             _radius = _radius + 3f;
             _angle = _angle + 0.5f;
             collision.gameObject.SetActive(false);
+        }
+        if(collision.gameObject.tag == "Enemy")
+        {
+            SceneManager.LoadScene("Laberinto");
+        }
+        if (collision.gameObject.tag == "EndGame")
+        {
+            SceneManager.LoadScene("Final");
         }
     }
 }

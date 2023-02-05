@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SmallBatery
   - BigBatery
+  - EndGame
   layers:
   - Default
   - TransparentFX
