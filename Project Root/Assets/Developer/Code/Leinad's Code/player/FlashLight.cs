@@ -45,7 +45,7 @@ public class FlashLight : MonoBehaviour
         if (Time.time <= maxtime/2)
         {
             
-            _flashLightPlayer.intensity = _angle;
+            _flashLightPlayer.pointLightOuterRadius = _angle;
             _flashLightGlow.pointLightOuterRadius = _radius;
             
             if(currentTimeTwo >= 1)
