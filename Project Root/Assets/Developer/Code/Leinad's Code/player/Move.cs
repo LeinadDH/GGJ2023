@@ -43,7 +43,7 @@ public class Move : MonoBehaviour
         while (true)
         { 
             PlayAudio();
-            yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(.3f);   
         }
     }
 
