@@ -16,6 +16,7 @@ public class FlashLight : MonoBehaviour
     private float _angle = 1;
     private float _radius = 6;
     public TMP_Text _textMeshPro;
+    public SphereCollider PlayerCollider;
 
     public void GetLights()
     {
@@ -68,4 +69,22 @@ public class FlashLight : MonoBehaviour
         }
     }
 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "SmallBatery")
+        {
+            _batery = _batery + 25;
+            _radius = _radius + 1.5f;
+            _angle = _angle + 0.25f;
+            collision.gameObject.SetActive(false);
+        }
+        if (collision.gameObject.tag == "BigBatery")
+        {
+            _batery = _batery + 50;
+            _radius = _radius + 3f;
+            _angle = _angle + 0.5f;
+            collision.gameObject.SetActive(false);
+        }
+    }
 }
