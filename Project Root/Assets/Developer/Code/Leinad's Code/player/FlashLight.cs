@@ -20,6 +20,11 @@ public class FlashLight : MonoBehaviour
     public TMP_Text _textMeshPro;
     public SphereCollider PlayerCollider;
 
+    private void Start()
+    {
+        _batery = 100;
+    }
+
     public void GetLights()
     {
         foreach (var lights in GetComponentsInChildren<Light2D>(true))
