@@ -5,10 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Move move;
+    private FlashLight flashLight;
+    public float MaxLighTime;
 
     private void Awake()
     {
         move = this.gameObject.GetComponent<Move>();
+        flashLight = this.gameObject.GetComponent<FlashLight>();
+        flashLight.GetLights();
         move.SetComponents();
     }
 
@@ -25,5 +29,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         move.MovePlayer();
+        flashLight.FlashLightTimer(MaxLighTime);
     }
 }
