@@ -7,6 +7,7 @@ public class Move : MonoBehaviour
     private PlayerActions _playerInput;
     private Rigidbody _rb;
     private float speed = 10f;
+    public Animator anim;
 
     public PlayerActions PlayerInput { get => _playerInput; set => _playerInput = value; }
     public Rigidbody Rb { get => _rb; set => _rb = value;}
@@ -22,5 +23,8 @@ public class Move : MonoBehaviour
     {
         Vector3 moveInput = _playerInput.Movement.Move.ReadValue<Vector3>();
         _rb.velocity = moveInput * speed;
+
+        anim.SetFloat("Horizontal", moveInput.x);
+        anim.SetFloat("Vertical", moveInput.z);
     }
 }
