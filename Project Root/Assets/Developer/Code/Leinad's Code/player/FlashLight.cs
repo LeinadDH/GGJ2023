@@ -39,7 +39,7 @@ public class FlashLight : MonoBehaviour
         currentTimeTwo += Time.deltaTime;
         float radiuspercent = 6f / maxtime;
         float anglepercent = 1f / maxtime;
-        float percentBatery = _batery / maxtime;
+        float percentBatery = 100 / maxtime *2;
         
         
         if (Time.time <= maxtime/2)
