@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Move move;
     private FlashLight flashLight;
     public float MaxLighTime;
+    public TMP_Text textMeshProUGUI;
 
     private void Awake()
     {
@@ -30,5 +32,6 @@ public class PlayerController : MonoBehaviour
     {
         move.MovePlayer();
         flashLight.FlashLightTimer(MaxLighTime);
+        
     }
 }
