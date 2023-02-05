@@ -115,7 +115,7 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
 
     void Logging()
     {
-        Debug.Log(_inLight);
+        // Debug.Log(_inLight);
         
     }
 
@@ -135,6 +135,8 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
 
     public void OnFlashLightHit()
     {
+        Debug.Log("FlashLightHit");
+        _inLight = true;
         if (!_inLight) return;
         if (_agent.speed <= 0)
         {
@@ -146,6 +148,8 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
 
     public void OnFlashLightExit()
     {
+        Debug.Log("FlashLighExit");
+        _inLight = false;
         switch (_pursue)
         {
             case true:
@@ -161,7 +165,6 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
                 }   
                 break;
         }
-        _agent.speed += stunRecoveryRate;
     }
 
     private void Prepare()
