@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class FlashLight : MonoBehaviour
 {
+    [SerializeField] private GameObject flashLightCollider;
+    public event EventHandler OnHalfBattery;
+    public event EventHandler OnNoBattery;
+    
     private Light2D _flashLightGlow;
     private Light2D _flashLightPlayer;
     private float _batery = 100;
@@ -46,6 +50,7 @@ public class FlashLight : MonoBehaviour
             
             _flashLightPlayer.pointLightOuterRadius = _angle;
             _flashLightGlow.pointLightOuterRadius = _radius;
+            flashLightCollider.SetActive(true);
             
             if(currentTimeTwo >= 1)
             {
@@ -63,12 +68,16 @@ public class FlashLight : MonoBehaviour
 
             if(_batery <= 50)
             {
-                //enemigos más agresivos
+                //enemigos mï¿½s agresivos
+                OnHalfBattery?.Invoke(this,EventArgs.Empty);
             }
         }
         else
         {
             _textMeshPro.text = "0%";
+            flashLightCollider.SetActive(false);
+            OnNoBattery?.Invoke(this,EventArgs.Empty);
+            
             //Se termino la bateria
         }
     }

@@ -6,7 +6,7 @@ public class Move : MonoBehaviour
 {
     private PlayerActions _playerInput;
     private Rigidbody _rb;
-    private float speed = 10f;
+    [SerializeField]private float speed = 10f;
     public Animator anim;
 
     public PlayerActions PlayerInput { get => _playerInput; set => _playerInput = value; }

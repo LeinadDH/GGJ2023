@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
     {
         EnemyStates();
         CheckPlayerDistance();
+        StunRecovery();
     }
     
     protected void EnemyStates()
@@ -114,7 +115,7 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
 
     #endregion
 
-    protected void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerStay(Collider other)
     {
         if(!other.CompareTag("FlashLight"))return;
         OnFlashLightHit();
@@ -122,8 +123,8 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
     
     protected void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("FlashLight")) return; 
-        OnFlashLightExit();
+        if (!other.CompareTag("FlashLight")) return;
+        _inLight = false;
     }
 
     public void OnFlashLightHit()
@@ -140,23 +141,22 @@ public class Enemy : MonoBehaviour, iFlashLightSensitive
 
     public void OnFlashLightExit()
     {
-        _inLight = false;
-        switch (_pursue)
+        StunRecovery();
+    }
+
+    private void StunRecovery()
+    {
+        if(_inLight)return;
+       
+            
+        if (_agent.speed < patrolSpeed)
         {
-            case true:
-                if (_agent.speed > pursuitSpeed)
-                {
-                    _agent.speed = pursuitSpeed;
-                }
-                break;
-            case false:
-                if (_agent.speed > patrolSpeed)
-                {
-                    _agent.speed = patrolSpeed;
-                }   
-                break;
-        }
-                _agent.speed += stunRecoveryRate * Time.fixedDeltaTime;
+            _agent.speed += stunRecoveryRate * Time.fixedDeltaTime;
+            Debug.Log("recovering");
+            
+        }   else{_agent.speed = patrolSpeed;}
+                
+        
     }
 
     protected void Prepare()
