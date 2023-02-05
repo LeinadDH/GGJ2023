@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CryoStorage;
 
-public class LightRotate : MonoBehaviour
+public class FlashLightRotate : MonoBehaviour
 {
     void Update()
     {

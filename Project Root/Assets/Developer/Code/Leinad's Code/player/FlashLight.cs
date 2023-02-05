@@ -65,7 +65,6 @@ public class FlashLight : MonoBehaviour
         else
         {
             _textMeshPro.text = "0%";
-            Debug.Log("se acabo la bateria");
         }
     }
 
